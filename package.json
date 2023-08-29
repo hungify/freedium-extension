@@ -1,10 +1,10 @@
 {
-  "name": "vitesse-webext",
-  "displayName": "Vitesse WebExt",
+  "name": "direct-proxy",
+  "displayName": "Direct Proxy",
   "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@8.3.1",
-  "description": "[description]",
+  "description": "A proxy allows you to unblock any blocked website with one click",
   "scripts": {
     "dev": "npm run clear && cross-env NODE_ENV=development run-p dev:*",
     "dev-firefox": "npm run clear && cross-env NODE_ENV=development EXTENSION=firefox run-p dev:*",
@@ -31,10 +31,12 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.36.0",
     "@ffflorian/jszip-cli": "^3.4.1",
     "@iconify/json": "^2.2.61",
     "@playwright/test": "^1.33.0",
+    "@so1ve/eslint-config": "^0.119.3",
+    "@so1ve/prettier-config": "^0.119.3",
+    "@types/chrome": "^0.0.243",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^18.16.5",
     "@types/webextension-polyfill": "^0.10.0",
@@ -43,7 +45,6 @@
     "@vitejs/plugin-vue": "^4.2.1",
     "@vue/compiler-sfc": "^3.2.47",
     "@vue/test-utils": "^2.3.2",
-    "@vueuse/core": "^10.1.2",
     "chokidar": "^3.5.3",
     "cross-env": "^7.0.3",
     "crx": "^5.0.1",
@@ -54,6 +55,7 @@
     "kolorist": "^1.8.0",
     "lint-staged": "^13.2.2",
     "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.2",
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^4.9.5",
