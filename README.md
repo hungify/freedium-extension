@@ -1,6 +1,6 @@
 # Direct Proxy Extension
 
-A proxy allows you to unblock any blocked website inspired by 12ft.io and hidemyass.com
+A extension allows you to unblock any blocked website inspired by 12ft.io and hidemyass.com
 
 ## Features
 
