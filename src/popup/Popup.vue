@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { CurrentTab, Mode } from "~/utils";
+import type { CurrentTab, Mode } from '~/utils'
 
 const leftHandUrl = new URL('../assets/left.svg', import.meta.url).href
 const rightHandUrl = new URL('../assets/right.svg', import.meta.url).href
 
 const url = ref<string>('')
 const originalUrl = ref<string>('')
-const mode = ref<Mode>("normal")
+const mode = ref<Mode>('normal')
 const instance = getCurrentInstance()
 const isLoading = ref(false)
 
@@ -25,33 +25,20 @@ const isProxyMode = computed(() => {
   return mode.value === 'proxy'
 })
 
-
 const isBlockedMode = computed(() => {
   return mode.value === 'blocked'
 })
 
 const handleLaunching = async () => {
-  if (!instance?.proxy?.$app)
-    return
+  if (!instance?.proxy?.$app) return
   try {
     const { proxyUrl } = instance.proxy?.$app
     isLoading.value = true
-    const res = await fetch(proxyUrl, {
-      body: new URLSearchParams({
-        'form[url]': url?.value,
-        'form[dataCenter]': 'random',
-        'terms-agreed': '1',
-      }),
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-    })
+    await chrome.tabs.update({ url: `${proxyUrl}/${url.value}` })
     isLoading.value = false
     mode.value = 'proxy'
     window.close()
-    await chrome.tabs.update({ url: res.url })
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error)
   }
 }
@@ -64,39 +51,38 @@ const handleLoadWithOriginalUrl = async () => {
 }
 
 const handleLaunchingOrReload = () => {
-  if (isProxyMode.value)
-    handleLoadWithOriginalUrl()
-  else if (isBlockedMode.value)
-    handleLaunching()
+  if (isProxyMode.value) handleLoadWithOriginalUrl()
+  else if (isBlockedMode.value) handleLaunching()
 }
 
 const statusLabel = computed(() => {
-  if (isProxyMode.value)
-    return "Proxy is detected"
-  if (isBlockedMode.value)
-    return 'Paywall is detected'
+  if (isProxyMode.value) return 'Proxy is detected'
+  if (isBlockedMode.value) return 'Paywall is detected'
 
   return 'Everything is fine, enjoy your reading!'
 })
 
 const buttonLabel = computed(() => {
-  if (isProxyMode.value)
-    return 'Original URL'
-  if (isBlockedMode.value)
-    return 'Remove Paywall'
+  if (isProxyMode.value) return 'Original URL'
+  if (isBlockedMode.value) return 'Remove Paywall'
 })
-
 </script>
 
 <template>
   <main class="w-[250px] p-4 text-center">
-    <div class="border border-yellow-300 rounded-lg bg-yellow-100 px-4 py-3 text-yellow-600">
-      <button v-if="isBlockedMode || isProxyMode"
+    <div
+      class="border border-yellow-300 rounded-lg bg-yellow-100 px-4 py-3 text-yellow-600"
+    >
+      <button
+        v-if="isBlockedMode || isProxyMode"
         class="group relative relative mb-4 overflow-hidden rounded bg-blue-50 px-5 py-2.5 text-blue-500 transition-all duration-300 ease-out hover:from-blue-500 hover:to-yellow-400 hover:bg-gradient-to-r hover:text-white hover:ring-2 hover:ring-offset-2 hover:ring-indigo-300 hover:ring-offset-indigo-200"
-        :class="isLoading ? 'opacity-50 cursor-not-allowed blur-out' : ''" :disabled="isLoading"
-        @click="handleLaunchingOrReload">
+        :class="isLoading ? 'opacity-50 cursor-not-allowed blur-out' : ''"
+        :disabled="isLoading"
+        @click="handleLaunchingOrReload"
+      >
         <span
-          class="absolute right-0 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-10 transition-all duration-1000 ease group-hover:-translate-x-40" />
+          class="absolute right-0 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-10 transition-all duration-1000 ease group-hover:-translate-x-40"
+        />
         <span class="relative z-20 flex items-center gap-1 text-sm">
           <MingcuteLoadingFill v-show="isLoading" class="animate-spin" />
           <strong>{{ buttonLabel }}</strong>
@@ -107,21 +93,33 @@ const buttonLabel = computed(() => {
 
       <div class="mt-4" :class="isLoading ? 'blur-out' : ''">
         <div class="flex" :class="isBlockedMode ? 'justify-center' : 'justify-between'">
-          <img alt="left-hand" class="w-1/3 transform" :class="isLoading ? 'slide-left' : ''" :src="leftHandUrl" />
+          <img
+            alt="left-hand"
+            class="w-1/3 transform"
+            :class="isLoading ? 'slide-left' : ''"
+            :src="leftHandUrl"
+          />
 
-          <button :class="isLoading ? 'btn-launching self-center' : 'hidden'" @click="handleLaunching">
+          <button
+            :class="isLoading ? 'btn-launching self-center' : 'hidden'"
+            @click="handleLaunching"
+          >
             <IconoirRocket color="#8CABFF" height="46" width="46" />
           </button>
 
-          <img alt="right-hand" class="w-1/3 transform" :class="isLoading ? 'slide-right' : ''" :src="rightHandUrl" />
+          <img
+            alt="right-hand"
+            class="w-1/3 transform"
+            :class="isLoading ? 'slide-right' : ''"
+            :src="rightHandUrl"
+          />
         </div>
       </div>
     </div>
-
   </main>
 </template>
 
-<style  scoped>
+<style scoped>
 /* ----------------------------------------------
   Generated by AnimatiSS
   Licensed under FreeBSD License
@@ -130,7 +128,7 @@ const buttonLabel = computed(() => {
 ---------------------------------------------- */
 
 .btn-launching {
-  animation: slide-top 0.4s linear both
+  animation: slide-top 0.4s linear both;
 }
 
 /* ----------------------------------------------
@@ -142,25 +140,25 @@ const buttonLabel = computed(() => {
 
 @keyframes slide-top {
   0% {
-    transform: translateY(0)
+    transform: translateY(0);
   }
 
   100% {
-    transform: translateY(-100px)
+    transform: translateY(-100px);
   }
 }
 
 .slide-right {
-  animation: slide-right 0.4s linear both
+  animation: slide-right 0.4s linear both;
 }
 
 @keyframes slide-right {
   0% {
-    transform: translateX(0)
+    transform: translateX(0);
   }
 
   100% {
-    transform: translateX(100px)
+    transform: translateX(100px);
   }
 }
 
@@ -172,16 +170,16 @@ const buttonLabel = computed(() => {
 ---------------------------------------------- */
 
 .slide-left {
-  animation: slide-left 0.4s linear both
+  animation: slide-left 0.4s linear both;
 }
 
 @keyframes slide-left {
   0% {
-    transform: translateX(0)
+    transform: translateX(0);
   }
 
   100% {
-    transform: translateX(-100px)
+    transform: translateX(-100px);
   }
 }
 
@@ -193,20 +191,19 @@ const buttonLabel = computed(() => {
 ---------------------------------------------- */
 
 .blur-out {
-  animation: blur-out 0.4s linear both
+  animation: blur-out 0.4s linear both;
 }
 
 @keyframes blur-out {
   0% {
-    filter: blur(.01px);
+    filter: blur(0.01px);
   }
 
   100% {
     filter: blur(12px);
-    opacity: 0
+    opacity: 0;
   }
 }
-
 
 /* ----------------------------------------------
   Generated by AnimatiSS
@@ -216,17 +213,17 @@ const buttonLabel = computed(() => {
 ---------------------------------------------- */
 
 .blur-out {
-  animation: blur-out 0.6s linear both
+  animation: blur-out 0.6s linear both;
 }
 
 @keyframes blur-out {
   0% {
-    filter: blur(.01px);
+    filter: blur(0.01px);
   }
 
   100% {
     filter: blur(12px);
-    opacity: 0
+    opacity: 0;
   }
 }
 </style>
