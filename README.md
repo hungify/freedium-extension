@@ -1,6 +1,6 @@
-# Direct Proxy Extension
+# Freedium Extension
 
-A extension allows you to unblock any blocked website inspired by 12ft.io and hidemyass.com
+A extension allows you to remove paywall on [medium](medium.com) inspired by [12ft.io](12ft.io) and [freedium](https://freedium.cfd)
 
 ## Features
 

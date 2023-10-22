@@ -1,10 +1,10 @@
 {
-  "name": "direct-proxy",
-  "displayName": "Direct Proxy",
+  "name": "freedium",
+  "displayName": "Freedium",
   "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@8.3.1",
-  "description": "A extension allows you to bypass any blocked website with one click",
+  "description": "A extension allows you to remove paywall on medium.com with one click.",
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_ENV=production run-s clear build:web build:prepare build:background",
@@ -37,8 +37,6 @@
     "@ffflorian/jszip-cli": "^3.4.1",
     "@iconify/json": "^2.2.131",
     "@playwright/test": "^1.39.0",
-    "@so1ve/eslint-config": "^0.119.3",
-    "@so1ve/prettier-config": "^0.119.3",
     "@sxzz/eslint-config": "^3.7.0",
     "@sxzz/prettier-config": "^1.0.4",
     "@types/chrome": "^0.0.243",
