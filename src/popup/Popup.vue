@@ -92,7 +92,10 @@ const buttonLabel = computed(() => {
       <strong class="block">{{ statusLabel }}</strong>
 
       <div class="mt-4" :class="isLoading ? 'blur-out' : ''">
-        <div class="flex" :class="isBlockedMode ? 'justify-center' : 'justify-between'">
+        <div
+          class="flex"
+          :class="isBlockedMode ? 'justify-center' : 'justify-between'"
+        >
           <img
             alt="left-hand"
             class="w-1/3 transform"

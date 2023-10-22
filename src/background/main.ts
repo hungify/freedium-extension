@@ -1,5 +1,10 @@
-import type { CurrentTab, Mode } from '~/utils'
-import { isSiteBlocked, isSiteProxy, setIcon } from '~/utils'
+import {
+  isSiteBlocked,
+  isSiteProxy,
+  setIcon,
+  type CurrentTab,
+  type Mode,
+} from '~/utils'
 
 // only on dev mode
 if (import.meta.hot) {

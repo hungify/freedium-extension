@@ -1,6 +1,5 @@
-import type { App } from 'vue'
-
 import { PROXY_URL } from '~/utils'
+import type { App } from 'vue'
 
 export function setupApp(app: App) {
   // Inject a globally available `$app` object in template

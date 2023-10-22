@@ -8,8 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
-import type { UserConfig } from 'vite'
-import { defineConfig } from 'vite'
+import { defineConfig, type UserConfig } from 'vite'
 
 import packageJson from './package.json'
 import { isDev, port, r } from './scripts/utils'
@@ -63,7 +62,10 @@ export const sharedConfig: UserConfig = {
       enforce: 'post',
       apply: 'build',
       transformIndexHtml(html, { path }) {
-        return html.replace(/"\/assets\//g, `"${relative(dirname(path), '/assets')}/`)
+        return html.replaceAll(
+          '"/assets/',
+          `"${relative(dirname(path), '/assets')}/`
+        )
       },
     },
   ],

@@ -1,3 +1,3 @@
-import { all } from "@sxzz/eslint-config";
+import { all } from '@sxzz/eslint-config'
 
-export default all;
+export default all

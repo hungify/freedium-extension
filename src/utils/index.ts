@@ -11,7 +11,7 @@ export const isSiteBlocked = async (tabUrl: URL): Promise<boolean> => {
     const res = await fetch(href)
 
     return !res.ok
-  } catch (error) {
+  } catch {
     return true
   }
 }
