@@ -1,9 +1,9 @@
 import {
+  type CurrentTab,
+  type Mode,
   isSiteBlocked,
   isSiteProxy,
   setIcon,
-  type CurrentTab,
-  type Mode,
 } from '~/utils'
 
 // only on dev mode
@@ -11,7 +11,7 @@ if (import.meta.hot) {
   // @ts-expect-error for background HMR
   import('/@vite/client')
   // load latest content script
-  import('./contentScriptHMR')
+  import('./content-script-hmr')
 }
 
 const setExtensionIcon = async (tabId: number) => {
@@ -59,7 +59,7 @@ browser.runtime.onInstalled.addListener((): void => {
   console.log('Extension installed')
 })
 
-browser.tabs.onActivated.addListener(async ({ tabId }) => {
+browser.tabs.onActivated.addListener(({ tabId }) => {
   setExtensionIcon(tabId)
 })
 
@@ -69,6 +69,6 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 })
 
-browser.tabs.onRemoved.addListener(async () => {
+browser.tabs.onRemoved.addListener(() => {
   chrome.storage.session.remove('currentTab')
 })

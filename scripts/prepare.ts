@@ -1,9 +1,7 @@
 // generate stub index.html files for dev entry
 import { execSync } from 'node:child_process'
-
-import chokidar from 'chokidar'
 import fs from 'fs-extra'
-
+import chokidar from 'chokidar'
 import { isDev, log, port, r } from './utils'
 
 /**
@@ -33,6 +31,7 @@ function writeManifest() {
 writeManifest()
 
 if (isDev) {
+  // eslint-disable-next-line unicorn/prefer-top-level-await
   stubIndexHtml()
   chokidar.watch(r('src/**/*.html')).on('change', () => {
     stubIndexHtml()

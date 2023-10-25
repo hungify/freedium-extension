@@ -10,4 +10,5 @@ export async function writeManifest() {
   log('PRE', 'write manifest.json')
 }
 
-writeManifest()w
+// eslint-disable-next-line unicorn/prefer-top-level-await
+writeManifest()
