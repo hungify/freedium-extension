@@ -31,8 +31,9 @@ const isBlockedMode = computed(() => {
 
 const handleLaunching = async () => {
   if (!instance?.proxy?.$app) return
+
   try {
-    const { proxyUrl } = instance.proxy?.$app
+    const { proxyUrl } = instance.proxy.$app
     isLoading.value = true
     await chrome.tabs.update({ url: `${proxyUrl}/${url.value}` })
     isLoading.value = false
