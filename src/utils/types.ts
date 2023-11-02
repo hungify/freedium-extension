@@ -1,8 +1,3 @@
-export type Mode = 'normal' | 'blocked' | 'proxy'
+import type { Mode } from './constants'
 
-export interface CurrentTab {
-  url: string
-  originalUrl: string
-  mode: Mode
-  tabId: number
-}
+export type AppMode = `${Mode}`

@@ -1,10 +1,4 @@
-import {
-  type CurrentTab,
-  type Mode,
-  isSiteBlocked,
-  isSiteProxy,
-  setIcon,
-} from '~/utils'
+import { Mode, getCurrentMode, setIcon } from '~/utils'
 
 // only on dev mode
 if (import.meta.hot) {
@@ -18,40 +12,11 @@ const setExtensionIcon = async (tabId: number) => {
   const tab = await browser.tabs.get(tabId)
   if (tab.url) {
     const tabUrl = new URL(tab.url)
-    const isBlocked = await isSiteBlocked(tabUrl)
-    const isProxy = isSiteProxy(tabUrl)
+    const mode = getCurrentMode(tabUrl)
 
-    let status: Mode = 'normal'
-    if (isBlocked) {
-      status = 'blocked'
-    } else if (isProxy) {
-      status = 'proxy'
-    }
-
-    setIcon(status, tabId)
-
-    const { currentTab } = (await chrome.storage.session.get('currentTab')) as {
-      currentTab: CurrentTab
-    }
-
-    currentTab?.tabId !== tabId || !currentTab?.tabId
-      ? await chrome.storage.session.set({
-          currentTab: {
-            tabId,
-            url: tabUrl.href,
-            originalUrl: tabUrl.href,
-            mode: status,
-          },
-        })
-      : await chrome.storage.session.set({
-          currentTab: {
-            ...currentTab,
-            url: tabUrl.href,
-            mode: status,
-          },
-        })
+    setIcon(mode, tabId)
   } else {
-    setIcon('normal', tabId)
+    setIcon(Mode.NORMAL, tabId)
   }
 }
 

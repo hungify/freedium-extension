@@ -1,25 +1,29 @@
-import { AVAILABLE_PROTOCOLS, PROXY_URL } from './constants'
-import type { Mode } from './types'
+import { Mode, PROXY_URL } from './constants'
 
 export * from './constants'
 export * from './types'
 
-export const isSiteBlocked = async (tabUrl: URL): Promise<boolean> => {
-  const { href, protocol } = tabUrl
-  if (!AVAILABLE_PROTOCOLS.includes(protocol)) return false
-  try {
-    const res = await fetch(href)
+export const isMediumSite = (tabUrl: URL): boolean => {
+  const { protocol, hostname } = tabUrl
+  if (protocol !== 'https:' || !hostname.includes('medium.com')) return false
 
-    return !res.ok
-  } catch {
-    return true
-  }
+  return true
 }
 
-export const isSiteProxy = (tabUrl: URL): boolean => {
-  const { href } = tabUrl
+export const isConnectedProxy = (url: string): boolean => {
+  return url.startsWith(PROXY_URL)
+}
 
-  return href.startsWith(PROXY_URL)
+export const getCurrentMode = (tabUrl: URL): Mode => {
+  if (isMediumSite(tabUrl)) {
+    return Mode.BLOCKED
+  }
+
+  if (isConnectedProxy(tabUrl.href)) {
+    return Mode.PROXY
+  }
+
+  return Mode.NORMAL
 }
 
 export const setIcon = (mode: Mode, tabId: number): void => {
